@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Quiz Generator</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 920px;
+        margin: 40px auto;
+        padding: 0 16px;
+      }
+      .card {
+        border: 1px solid #e5e5e5;
+        border-radius: 14px;
+        padding: 18px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      }
+      label {
+        display: block;
+        font-weight: 700;
+        margin-top: 7px;
+      }
+      input[type="text"],
+      input[type="number"],
+      textarea,
+      select {
+        width: 100%;
+        margin-top: 8px;
+        padding: 10px 12px;
+        border: 1px solid #d7d7d7;
+        border-radius: 10px;
+        font-size: 14px;
+        box-sizing: border-box;
+      }
+      textarea {
+        min-height: 160px;
+        resize: vertical;
+      }
+      .row {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .hint {
+        font-size: 12px;
+        color: #666;
+        margin-top: 6px;
+      }
+      .btn {
+        margin-top: 18px;
+        background: #111;
+        color: #fff;
+        border: 0;
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+      .btn:hover {
+        opacity: 0.92;
+      }
+      .top {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+      .top h1 {
+        margin: 0;
+        font-size: 22px;
+      }
+      .top p {
+        margin: 0;
+        color: #666;
+      }
+      .footer {
+        margin-top: 14px;
+        font-size: 12px;
+        color: #777;
+      }
+      @media (max-width: 820px) {
+        .row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="top">
+      <div>
+        <h1>Quiz Generator</h1>
+      </div>
+    </div>
+
+    <div class="card">
+      <!-- Action harus sesuai router kamu: POST /quiz/ -->
+      <form method="post" action="/quiz/">
+        <label for="topic">Topik / Materi</label>
+        <input
+          id="topic"
+          name="topic"
+          type="text"
+          placeholder="Contoh: Dasar-dasar FastAPI (Routing, Request, Response)"
+          required
+        />
+        <div class="hint">
+          Tips: makin spesifik topiknya, makin bagus kualitas soalnya.
+        </div>
+
+        <div class="row">
+          <div>
+            <label for="difficulty">Tingkat kesulitan</label>
+            <select id="difficulty" name="difficulty">
+              <option value="easy">easy</option>
+              <option value="medium" selected>medium</option>
+              <option value="hard">hard</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="total_questions">Jumlah soal</label>
+            <input
+              id="total_questions"
+              name="total_questions"
+              type="number"
+              min="1"
+              max="30"
+              value="5"
+              required
+            />
+            <div class="hint">Rekomendasi: 5–10 soal.</div>
+          </div>
+        </div>
+
+        <!-- Opsional: kamu bisa pakai "context" kalau mau quiz dari catatan/teks -->
+        <label for="context"
+          >Catatan / konteks tambahan (opsional)</label
+        >
+        <textarea
+          id="context"
+          name="context"
+          placeholder="Tempel ringkasan materi / poin penting di sini (kalau ingin soal lebih ngikut catatan)."
+        ></textarea>
+
+        <button class="btn" type="submit">Generate Quiz</button>
+      </form>
+    </div>
+  </body>
+</html>

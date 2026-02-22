@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Quiz Result</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 980px;
+        margin: 40px auto;
+        padding: 0 16px;
+      }
+      .header {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 22px;
+      }
+      .meta {
+        color: #666;
+        margin: 6px 0 0;
+      }
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        background: #111;
+        color: #fff;
+        border: 0;
+        padding: 10px 12px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+        text-decoration: none;
+        display: inline-block;
+      }
+      .btn.secondary {
+        background: #f3f3f3;
+        color: #111;
+        border: 1px solid #ddd;
+      }
+      .card {
+        border: 1px solid #e5e5e5;
+        border-radius: 14px;
+        padding: 16px;
+        margin: 14px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.04);
+      }
+      .q-title {
+        margin: 0 0 10px;
+        font-size: 16px;
+      }
+      ul.choices {
+        margin: 0;
+        padding-left: 18px;
+      }
+      ul.choices li {
+        margin: 7px 0;
+      }
+      details {
+        margin-top: 10px;
+      }
+      summary {
+        cursor: pointer;
+        font-weight: 700;
+      }
+      .pill {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        border: 1px solid #ddd;
+        background: #fafafa;
+        color: #333;
+      }
+      .answer {
+        margin-top: 10px;
+      }
+      code {
+        background: #f6f6f6;
+        padding: 2px 6px;
+        border-radius: 8px;
+      }
+      .copy-note {
+        font-size: 12px;
+        color: #666;
+        margin-top: 6px;
+      }
+      @media (max-width: 680px) {
+        .header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div>
+        <h1>Quiz: {{ quiz.topic }}</h1>
+        <p class="meta">
+          <span class="pill">difficulty: {{ quiz.difficulty }}</span>
+          <span class="pill">total: {{ quiz.total_questions }}</span>
+        </p>
+      </div>
+
+      <div class="toolbar">
+        <a class="btn" href="/quiz/">Buat Quiz Baru</a>
+      </div>
+    </div>
+
+    {% if quiz.questions %} {% for item in quiz.questions %}
+    <div class="card">
+      <h3 class="q-title">{{ item.number }}. {{ item.question }}</h3>
+
+      <ul class="choices">
+        {% for c in item.choices %}
+        <li><b>{{ c.label }}.</b> {{ c.text }}</li>
+        {% endfor %}
+      </ul>
+
+      <details>
+        <summary>Lihat jawaban & pembahasan</summary>
+        <div class="answer">
+          <p><b>Jawaban:</b> <code>{{ item.answer }}</code></p>
+          <p><b>Pembahasan:</b> {{ item.explanation }}</p>
+        </div>
+      </details>
+    </div>
+    {% endfor %} {% else %}
+    <div class="card">
+      <p>
+        Tidak ada soal yang dihasilkan. Coba ulangi dengan topik yang
+        lebih spesifik.
+      </p>
+      <a class="btn secondary" href="/quiz/">Kembali</a>
+    </div>
+    {% endif %}
+  </body>
+</html>
